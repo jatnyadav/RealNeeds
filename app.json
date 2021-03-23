@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RealNeeds1",
-    "slug": "RealNeeds1",
+    "name": "RealNeeds",
+    "slug": "RealNeeds",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
