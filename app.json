@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.i4consulting.RealNeeds"
     },
     "web": {
       "favicon": "./assets/favicon.png"

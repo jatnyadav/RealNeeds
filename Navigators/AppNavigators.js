@@ -23,6 +23,8 @@ import Home from '../Screens/App/Home';
 import DetailsScreen from '../Screens/App/DetailsScreen';
 import ProfileScreen from '../Screens/App/ProfileScreen';
 import SettingsScreen from '../Screens/App/SettingScreen';
+import Feedback from '../Screens/App/feedback'
+import Icon from 'react-native-vector-icons/Feather';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,10 +43,6 @@ function HomeStack() {
           name="Home"
           component={Home}
           />
-        <Stack.Screen
-          name="Details"
-          component={DetailsScreen}
-          options={{ title: 'Details Page' }} />
       </Stack.Navigator>
   );
 }
@@ -95,9 +93,10 @@ function SettingsStack() {
     <Stack.Navigator
       initialRouteName="Settings"
       screenOptions={{
-        headerStyle: { backgroundColor: '#42f44b' },
-        headerTintColor: '#fff',
-        headerTitleStyle: { fontWeight: 'bold' }
+        headerStyle: { backgroundColor: '#fff' },
+          headerTintColor: 'black',
+          headerTitle:'Settings',
+          headerTitleStyle: { fontWeight: '600',alignSelf:'center' }
       }}>
       <Stack.Screen
         name="Settings"
@@ -155,11 +154,7 @@ function App() {
           options={{
             tabBarLabel: 'Notifications',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="road"
-                color={color}
-                size={24}
-              />
+              <Icon name={'mail'}  size={24} />
             ),
           }}  />
           <Tab.Screen
@@ -168,11 +163,7 @@ function App() {
           options={{
             tabBarLabel: 'Setting',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="storefront-outline"
-                color={color}
-                size={24}
-              />
+              <Icon name={'settings'}  size={24} />
             ),
           }}  />
           

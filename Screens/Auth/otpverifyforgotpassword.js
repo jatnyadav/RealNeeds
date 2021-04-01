@@ -2,103 +2,56 @@ import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { TextInput } from 'react-native';
 import Axios from 'axios';
-import {CreateAccount} from "../../utils/api";
 import Loading from '../../components/Loading'
 import { Toast,Popup } from 'popup-ui';
 import Signup from '../Auth/Signup2senior'
+import {  Icon } from "react-native-elements";
 import global from '../../utils/global'
 import { StyleSheet, Text, TouchableOpacity, View ,Image} from 'react-native';
 import { Input } from 'react-native-elements';
 import { Alert } from 'react-native';
-
-
-export default class Otpverify extends Component {
+export default class otpverifyforgotpassword extends Component {
   constructor(props) {
 		super(props);
 		this.state = { t1: '', t2: '', t3: '', t4: ''};
   }
   CreateAccont() {
-    console.log(this.state.t1)
-    
     const edtOtp = this.state.t1 + this.state.t2 + this.state.t3 + this.state.t4;
-    console.log(this.props.route.params.otp)
     if(this.props.route.params.otp == edtOtp){
-      Loading.show();
-      Axios({
-        method: "post",
-        url: "https://realneed.i4dev.in/api/create-account",
-        data: {
-          name: this.props.route.params.name,
-          age: this.props.route.params.age,
-          email:this.props.route.params.email,
-          phone:this.props.route.params.phone,
-          hkrid:this.props.route.params.hkrid,
-          password:this.props.route.params.password,
-          confirm_password:this.props.route.params.confirm_password,
-          
-        },
-        validateStatus: () => {
-          return true; // I'm always returning true, you may want to do it depending on the status received
-        },
-      }).then((response) => {
-          if (response.data.status == true) {
-            Loading.hide();
-            Popup.show({
-              type: "Success",
-              title: "Congratulations 🎉🎉",
-              button: true,
-              textBody: response.data.message,
-              buttonText: true,
-              buttonText: "Login",
-              callback: () => {
-                Popup.hide();
-                this.props.navigation.navigate("App");
-              },
-            });
-          }
-           else {
-            Loading.hide();
-            Popup.show({
-              type: "Danger",
-              title: global.CONSTANT.APPNAME + " Alert❗",
-              button: true,
-              textBody: response.data.message,  
-              buttontext: "Ok",
-              callback: () => Popup.hide(),
-            });
-          }
-    });
+      this.props.navigation.navigate('ResetPassword',{
+        email:this.props.route.params.email
+      })
     }
     else{
-      Alert.alert('otp not verify')
-   return false
-    }
-
-    
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Otp Not Match.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
+    } 
   }
-  
   render(){
-  
-    const{name,age,email,password,confirm_password,hkrid,phone,otp} = this.props.route.params
-    return (
+    const{email,otp} = this.props.route.params
+  return (
     <View style={styles.container}>
-      <Text>Otp is:{otp}</Text>
       <TouchableOpacity onPress={() => { this.props.navigation.navigate("Login");}}>
-      <Icon name='arrow-left'size={30} style={{color:'white',
-    marginTop:57,
-    marginLeft:16}}/>  
+      <Image style={styles.ImageStyle}
+          source={require('../../assets/backarrow.png')} //Change your icon image here
+                                />   
  </TouchableOpacity>
       <Text style={{fontSize:32,color:'white',fontWeight:'bold',textAlign:'left',marginLeft:30,marginTop:10}}>Verification</Text>
       <Text style={{fontSize:20,color:'white',fontWeight:'400',textAlign:'left',marginLeft:30,marginTop:2,marginBottom:30}}>{"Please enter the verification  \ncode sent to your Email id"}</Text>
  
       <View style={styles.downview}>
-        <View style={{flexDirection:'row',alignItems:'center',textAlign:'center'}}>
+        <View style={{flexDirection:'row'}}>
       <TextInput style={{marginTop:36,height:52,width:65,marginLeft:30,backgroundColor:'#F4F4FC',textAlign:'center',borderRadius:8}}
-        ref={'nameref'}
-        keyboardType='number-pad'
+         keyboardType='number-pad'
          maxLength={1}
          returnKeyType={'next'}
          autoFocus = {true}
+         onSubmitEditing={() => { this.secondTextInput.focus(); }}
          onChangeText={(v) => this.setState({ t1: v })}
          value={this.state.t1}
       />
@@ -133,6 +86,7 @@ export default class Otpverify extends Component {
           <TouchableOpacity>
           <Text style={{fontWeight:'bold',fontSize:16,marginTop:27,marginLeft:5,textDecorationLine:'underline'}}>Resend Now</Text>
         </TouchableOpacity>
+        
         </View>
         
       </View>     

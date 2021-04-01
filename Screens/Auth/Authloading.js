@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
-import { ValidateUser } from "../../utils/api";
 import global from "../../utils/global";
 
 export default class AuthLoading extends Component {
   constructor(props) {
     super(props);
-    ValidateUser(); // this.getToken();
+     // this.getToken();
     this.state = { accessToken: "", user: "" };
   }
 

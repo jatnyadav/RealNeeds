@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="503743d3-df0a-4477-bf71-ef98c5d2db95" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Navigators/AuthNavigators.js" beforeDir="false" afterPath="$PROJECT_DIR$/Navigators/AuthNavigators.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Navigators/MainNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/Navigators/MainNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/Authloading.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/Authloading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/ForgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/ForgotPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/Otpverify.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/Otpverify.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/Resetpassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/Resetpassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/Signup2senior.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/Signup2senior.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/Signupfamilyfriends.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/Signupfamilyfriends.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screens/Auth/selectedcatagory.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screens/Auth/selectedcatagory.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/global.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/global.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +33,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/ReactNative/Cogniable/android" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="SvnConfiguration">
@@ -38,10 +50,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="93" y="93" width="1350" height="638" key="AVDManager" timestamp="1614751716208">
+    <state x="93" y="93" width="1350" height="638" key="AVDManager" timestamp="1616755017867">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="93" y="93" width="1350" height="638" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1614751716208" />
+    <state x="93" y="93" width="1350" height="638" key="AVDManager/0.0.1536.824@0.0.1536.824" timestamp="1616755017867" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1614927888869">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

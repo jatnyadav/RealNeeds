@@ -1,21 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { TextInput } from 'react-native'
+import Icon from 'react-native-vector-icons/Feather';
 import Axios from 'axios';
 import global from '../../utils/global'
+import Loading from '../../components/Loading'
+
+import {Popup} from 'popup-ui'
 import { StyleSheet, Text, TouchableOpacity, View ,Image,Alert} from 'react-native';
-
-import { Input } from 'react-native-elements';
-
 export default class ForgotPassword extends Component {
   constructor(props){
     super(props);
     this.state ={
-      email:''
-    
-
+      email:'',
+      backgroundColor:'black'
   }}
-  ResetPassword(){
+  ResetPassword() {
+    Loading.show();
+    console.log("data isssssssssssssssssssssssssssss")
     Axios({
       method: "post",
       url: "https://realneed.i4dev.in/api/resetpassword",
@@ -25,14 +27,37 @@ export default class ForgotPassword extends Component {
       validateStatus: () => {
         return true; // I'm always returning true, you may want to do it depending on the status received
       },
-    }).then((res)=>{
-      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Result",res)
-      this.props.navigation.navigate("Verification")
-    }).catch((err) => {
-      console.log("Error", err);
-      console.log("Error Response", err.response);
-      Alert.alert("Information", "Error Occured");
-    })
+    }).then(
+      function (response) {
+        if (response.data.status == true) {
+          const otp = response.data.data.otp
+          console.log('otp isssssssssssssssssssssssssssssssssssssssss',otp)
+          Loading.hide();
+          // Popup.show({
+          //   type: "Success",
+          //   title: "Congratulations 🎉🎉",
+          //   button: true,
+          //   textBody: response.data.message,
+          //   buttonText: "Welcome",
+          //   callback: () => {
+          //     Popup.hide();
+              this.props.navigation.navigate("otpverifyforgotpassword",{
+                email:this.state.email,
+                otp
+          });
+        } else {
+          Loading.hide();
+          Popup.show({
+            type: "Danger",
+            title: global.CONSTANT.APPNAME + " Alert❗",
+            button: true,
+            textBody: response.data.message,  
+            buttontext: "Ok",
+            callback: () => Popup.hide(),
+          });
+        }
+      }.bind(this)
+    );
   }
     
 
@@ -51,25 +76,34 @@ export default class ForgotPassword extends Component {
   render(){
   return (
     <View style={styles.container}>
-     <TouchableOpacity onPress={() => { this.props.navigation.navigate("Login");}}>
-      <Image style={styles.ImageStyle}
-          source={require('../../assets/backarrow.png')} //Change your icon image here
-                                />   
+     <TouchableOpacity onPress={() => { this.props.navigation.navigate("Login");}}
+     >
+    <Icon name='arrow-left'size={30} style={{color:'white',
+    marginTop:47,
+    marginLeft:16}}/> 
  </TouchableOpacity>
       <Text style={{fontSize:32,color:'white',fontWeight:'bold',textAlign:'left',marginTop:9,marginLeft:30,}}>Forgot Password</Text>
-      <Text style={{fontSize:20,color:'white',fontWeight:'400',textAlign:'left',marginLeft:30,marginBottom:10,marginTop:2}}>Enter your registerd Email id</Text>
+      <Text style={{fontSize:20,color:'white',fontWeight:'400',textAlign:'left',marginLeft:30,marginBottom:30}}>Enter your registerd Email id</Text>
       <View style={styles.downview}>
       <View style={styles.SectionStyle}>
-        <Image style={styles.ImageStyle2}
-        source={require('../../assets/Email.png')} //Change your icon image here
-            />
+      <Icon name={'user'}  size={24} style={{marginLeft:8}}
+      color ={this.state.backgroundColor}
+      />
           <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
               placeholder="Email Id"
               underlineColorAndroid="transparent"
+              color={this.state.backgroundColor}
+							selectionColor='#0B1088'
               keyboardType ="email-address"
               onChangeText={(v) => this.setState({ email: v })}
               value={this.state.email}
+              onFocus={() => {
+								this.setState({ backgroundColor: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor: '#8FAAB2' });
+							}}
           />
         </View>
         <TouchableOpacity  onPress={()=> this.handleValidate()}

@@ -11,7 +11,12 @@ export default {
   ASSETS: {
     SPLASH: require("./../assets/age.png"),
     // LOGO: require("./../assets/images/Logo.png"),
-     LOGO_ICON: require("./../assets/Senior.png")
+     LOGO_ICON: require("./../assets/Senior.png"),
+     Activateff:require('../assets/activefriendsandfamily.png'),
+     Activatesenior:require('../assets/activesenior.png'),
+     InActivateff:require('../assets/inactivefriendsandfamily.png'),
+     InActivatesenior:require('../assets/inactivesenior.png'),
+     LoadingScreen:require('../assets/activityindicator.jpg')
     // FB_ICON: require("./../assets/images/facebooklogin.png"),
     // GOOGLE_ICON: require("./../assets/images/googlelogin.png"),
     // INSTAGRAM_ICON: require("./../assets/images/instagram.png"),

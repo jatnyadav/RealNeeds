@@ -1,6 +1,6 @@
 import React from "react";
 import Axios from "axios";
-import Loading from "../components/loading"
+import Loading from "../components/Loading"
 import { Popup, Toast } from "popup-ui";
 import { AsyncStorage } from "react-native";
 import * as RootNavigation from "./RootNavigation";
@@ -166,115 +166,42 @@ export async function StoreUserData(data) {
     console.log("Something went wrong");
   }
 }
-
-// login api
-export async function Signin(d) {
+//send otp api
+export async function Signup(d) {
   Loading.show();
   Axios({
     method: "post",
-    url: "https://realneed.i4dev.in/api/login",
+    url: "https://realneed.i4dev.in/api/sendotp",
     data: {
-      phone: d.username,
-      password: d.password,
-      device_token: global.CONSTANT.DEVICETOKEN,
-    },
-    validateStatus: () => {
-      return true;
-    },
-  }).then(
-    function (response) {
-      if (response.data.status_code == 200) {
-        StoreToken(response.data.data.api_token);
-        GetToken(response.data.data);
-      } else {
-        Loading.hide();
-
-        Popup.show({
-          type: "Danger",
-          title: global.CONSTANT.APPNAME + " Alert❗",
-          button: false,
-          textBody: response.data.error_message,
-          buttontext: "Ok",
-          callback: () => Popup.hide(),
-        });
-      }
-    }.bind(this)
-  );
-}
-
-// signup api
-export async function Signup(d) {
-  Axios({
-    method: "post",
-    url: "https://realneed.i4dev.in/api/create-account",
-    data: {
-      name: d.full_name,
-      age: d.age,
+      phone: d.phone,
       email: d.email,
-      phone:d.number,
-      hkrid:d.unique_id,
-      password: d.password,
     },
     validateStatus: () => {
       return true; // I'm always returning true, you may want to do it depending on the status received
     },
   }).then(
-     function (response) {
-      if (response.data.status_code == 200) {
+    function (response) {
+      if (response.data.code == 200) {
         Loading.hide();
         Popup.show({
           type: "Success",
           title: "Congratulations 🎉🎉",
-          button: false,
-          textBody: response.data.success_message,
-          buttonText: "Welcome",
-          callback: async() => {
-            Popup.hide();
-            StoreToken(response.data.data.api_token);
-            StoreUserData(response.data.data);
-
-           await RootNavigation.navigate("Welcome");
-          },
-        });
-      } else {
-        Loading.hide();
-        Popup.show({
-          type: "Danger",
-          title: global.CONSTANT.APPNAME + " Alert❗",
-          button: false,
-          textBody: response.data.error_message,
-          buttontext: "Ok",
-          callback: () => Popup.hide(),
-        });
-      }
-    }.bind(this)
-  );
-}
-export async function SendOtp(d) {
-  Axios({
-    method: "post",
-    url: "https://realneed.i4dev.in/api/sendotp?email=m@gmail.com&phone=87644541774",
-    data: {
-      email: d.email,
-      phone: d.number
-    },
-    validateStatus: () => {
-      return true; // I'm always returning true, you may want to do it depending on the status received
-    },
-  }).then(
-    function (response) {
-      if (response.data.status_code == 200) {
-        Popup.show({
-          type: "Success otp sent",
-          button: false,
-          textBody: response.data.success_message,
+          button: true,
+          textBody: response.data.message,
           buttonText: "Welcome",
           callback: () => {
             Popup.hide();
-            StoreToken(response.data.data.api_token);
             StoreUserData(response.data.data);
 
-            RootNavigation.navigate("Otpverify",response.data);
+            RootNavigation.navigate("Verification",{
+              name:this.state.name,
+              age:this.state.age,
+              email:this.state.email,
+              phone:this.state.phone,
+              hkrid:this.state.unique_id,
+              password:this.state.password,
+              confirm_password:this.state.confirm_password
+            });
           },
         });
       } else {
@@ -282,7 +209,7 @@ export async function SendOtp(d) {
         Popup.show({
           type: "Danger",
           title: global.CONSTANT.APPNAME + " Alert❗",
-          button: false,
+          button: true,
           textBody: response.data.error_message,
           buttontext: "Ok",
           callback: () => Popup.hide(),

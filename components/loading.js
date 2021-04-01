@@ -37,7 +37,7 @@ export default class Loading extends Component {
         containerStyle={styles.overlay}
       >
         <View style={{ backgroundColor: "transparent" }}>
-          <Image source={global.ASSETS.LOGO_ICON} style={styles.image} />
+          <Image source={global.ASSETS.LoadingScreen} style={styles.image} />
           <Text style={styles.loadingText}>Loading ...</Text>
         </View>
       </Overlay>

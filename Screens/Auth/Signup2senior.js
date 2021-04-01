@@ -2,102 +2,214 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState,Component } from "react";
 import Axios from 'axios';
 import global from '../../utils/global'
-//import {Signup,SendOtp} from '../../utils/api'
-import {  Icon } from "react-native-elements";
-import { StyleSheet, Text, View, ScrollView, TextInput, Button,Alert,CheckBox, Touchable, TouchableOpacity,Image} from 'react-native';
-import axios from 'axios';
+import Loading from '../../components/Loading'
+//import {Signup} from '../../utils/api';
+import Icon from 'react-native-vector-icons/Feather';
+import { CheckBox } from 'react-native-elements'
+import { StyleSheet, Text, View,TextInput,Alert,TouchableOpacity,Image,ScrollView} from 'react-native';
+import { Toast,Popup } from 'popup-ui';
 export default class Signup2 extends Component {
   constructor(props){
     super(props);
     this.state ={
-  
     full_name: "",
     age:"",
     email: "",
-    number: "",
+    phone: "",
     unique_id:"",
     password: "",
     confirm_password:"",
     signedIn: true,
+    backgroundColor:'black',
+    backgroundColor1:'black',
+    backgroundColor2:'black',
+    backgroundColor3:'black',
+    backgroundColor4:'black',
+    backgroundColor5:'black',
+    backgroundColor6:'black',
+    pressed: false,
+    checked:false
   }}
-  Sendotp(){
+    Signup() {
+    Loading.show();
+    console.log("data isssssssssssssssssssssssssssss")
     Axios({
       method: "post",
-      url: "https://realneed.i4dev.in/api/create-account",
+      url: "https://realneed.i4dev.in/api/sendotp",
       data: {
-        name: this.state.full_name,
-        age:this.state.age,
+        phone: this.state.phone,
         email: this.state.email,
-        phone: this.state.number,
-        hkrid:this.state.unique_id,
-        password:this.state.password,
-        confirm_password:this.state.confirm_password,
       },
       validateStatus: () => {
         return true; // I'm always returning true, you may want to do it depending on the status received
       },
-    }).then((res)=>{
-      console.log("Result",res)
-      this.props.navigation.navigate("Login")
-    }).catch((err) => {
-      console.log("Error", err);
-      console.log("Error Response", err.response);
-      Alert.alert("the input email not right or not exist into database");
-    })
-    
+    }).then(
+      function (response) {
+        if (response.data.status == true) {
+          Loading.hide();
+          const otp = response.data.data.otp
+          console.log(response.data.data.otp)
+          // Popup.show({
+          //   type: "Success",
+          //   title: "Congratulations 🎉🎉",
+          //   button: true,
+          //   textBody: response.data.message,
+          //   buttonText: "Welcome",
+          //   callback: () => {
+          //     Popup.hide();
+              this.props.navigation.navigate("Verification",{
+                name:this.state.full_name,
+                age:this.state.age,
+                email:this.state.email,
+                phone:this.state.phone,
+                hkrid:this.state.unique_id,
+                password:this.state.password,
+                confirm_password:this.state.confirm_password,
+                otp
+          });
+        } else {
+          Loading.hide();
+          Popup.show({
+            type: "Danger",
+            title: global.CONSTANT.APPNAME + " Alert❗",
+            button: true,
+            textBody: response.data.message,  
+            buttontext: "Ok",
+            callback: () => Popup.hide(),
+          });
+        }
+      }.bind(this)
+    );
   }
-  onFocus() {
-    this.setState({
-        color: 'blue'
-    })
-  }
-
-  
- 
   handleValidate() {
     if (this.state.full_name == "") {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter full name ");
-    }else if (
-      !(
-        this.state.full_name.length <= 32
-      )
-    ) {
-      Alert.alert(global.CONSTANT.APPNAME, "Full Name Length is too long");
-    }
-     else if (this.state.age == "") {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter age ");
-    }  else if (
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter your full name.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
+    } else if (this.state.age == "") {
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter your age.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
+    } else if (
       !(
         this.state.age.length == 2
       )
     ) {
-      Alert.alert(global.CONSTANT.APPNAME, "May be you put wrong age");
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter valid age.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
     }
     else if (this.state.email == "") {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter e-mail address ");
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter email address.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
     } else if (
       !this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
     ) {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter  valid e-mail address ");
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter valid email address.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
     } else if (this.state.number == "") {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter phone no ");
-    }else if (this.state.number.length < 8  && this.state.number.length > 11) {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter  8 to 11 phone no ");}
-    else if (this.state.unique_id == "") {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter unique id  ");
-    }else if (this.state.password == "") {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter password ");
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter mobile number.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
+    }
+     else if (this.state.unique_id == "") {
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter unique id.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
     } else if (
       !(
-        this.state.password.length >= 4
+        this.state.unique_id.length == 6
       )
     ) {
-      Alert.alert(global.CONSTANT.APPNAME, "Please enter valid password ");
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "The hkrid must be atleast 6 charactar.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
+    }
+     else if (this.state.password == "") {
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter password.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });}
+    else if (
+      !(
+        this.state.password.length == 4
+      )
+    ) {
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter valid password.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
+    } else if (this.state.confirm_password == "") {
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter confirm password.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });}
+    else if (
+      !(
+        this.state.password.length == 4
+      )
+    ) {
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Please enter valid password.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
     }else if (this.state.password != this.state.confirm_password) {
-      Alert.alert(global.CONSTANT.APPNAME, "password not match ");
+      Toast.show({
+        title: "Validation Alert❗",
+        text: "Password Not Match.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
     }
      else {
-      this.Sendotp();
+       this.Signup();
     }
   }
   
@@ -107,87 +219,128 @@ export default class Signup2 extends Component {
   return (
 
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+       <ScrollView style={styles.scrollView}>
       <TouchableOpacity onPress={() => { this.props.navigation.navigate("Catagory");}}>
-      <Image style={styles.ImageStyle1}
-          source={require('../../assets/backarrow.png')} //Change your icon image here
-                                />   
+      <Icon name='arrow-left'size={30} style={{color:'white',
+    marginTop:47,
+    marginLeft:16}}/>   
  </TouchableOpacity>
-      <Text style={{fontSize:32,color:'white',fontWeight:'bold',textAlign:'left',marginTop:9,marginLeft:30,}}>Crate an account</Text>
-      <Text style={{fontSize:20,color:'white',fontWeight:'400',textAlign:'left',marginLeft:30,marginBottom:10,marginTop:2}}>Sign up To get Started!</Text>
+      <Text style={{fontSize:32,color:'white',fontWeight:'bold',textAlign:'left',marginTop:4,marginLeft:30,}}>Crate an account</Text>
+      <Text style={{fontSize:20,color:'white',fontWeight:'400',textAlign:'left',marginLeft:30,marginBottom:30,marginTop:2}}>Sign up To get Started!</Text>
       
        <View style={styles.downview}>
-         <View style={styles.SectionStyle}>
-        <Image style={styles.ImageStyle}
-        source={require('../../assets/feather-user.png')} //Change your icon image here
-            />
+         <View style={styles.SectionStyle2}>
+         <Icon name={'user'}  size={24} style={{marginLeft:8}}
+         color ={this.state.backgroundColor}
+         />
       <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
+              color={this.state.backgroundColor}
+							selectionColor='#0B1088'
               placeholder="Full Name"
-              onFocus={ () => this.onFocus() }
               underlineColorAndroid="transparent"
               onChangeText={(v) => this.setState({ full_name: v })}
               value={this.state.full_name}
+              onFocus={() => {
+								this.setState({ backgroundColor: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor: '#8FAAB2' });
+							}}
           />
          </View>
               <View style={styles.SectionStyle}>
-                <Image style={styles.ImageStyle}
-                source={require('../../assets/age.png')} //Change your icon image here
-                    />
+              <Icon name={'calendar'}  size={24} style={{marginLeft:8}}
+              color ={this.state.backgroundColor1}
+              />
       <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
+              color={this.state.backgroundColor1}
+							selectionColor='#0B1088'
               placeholder="Age"
               underlineColorAndroid="transparent"
               keyboardType ={'number-pad'}
               onChangeText={(v) => this.setState({ age: v })}
               value={this.state.age}
+              onFocus={() => {
+								this.setState({ backgroundColor1: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor1: '#8FAAB2' });
+							}}
           />
-    </View>
-    <View style={styles.SectionStyle}>
-        <Image style={styles.ImageStyle}
-        source={require('../../assets/Email.png')} //Change your icon image here
-            />
+       </View>
+       <View style={styles.SectionStyle}>
+       <Icon name={'mail'}  size={24} style={{marginLeft:8}}
+      color ={this.state.backgroundColor2} 
+       />
       <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
-              placeholder="Email Id"
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
+              color={this.state.backgroundColor2}
+							selectionColor='#0B1088'
+              placeholder="EmailId"
               underlineColorAndroid="transparent"
               keyboardType='email-address'
               onChangeText={(v) => this.setState({ email: v })}
               value={this.state.email}
+              onFocus={() => {
+								this.setState({ backgroundColor2: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor2: '#8FAAB2' });
+							}}
           />
     </View>
     <View style={styles.SectionStyle}>
-        <Image style={styles.ImageStyle}
-        source={require('../../assets/Phone.png')} //Change your icon image here
-            />
+    <Icon name={'phone'}  size={24} style={{marginLeft:8}}
+    color ={this.state.backgroundColor3}
+    />
       <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
+              color={this.state.backgroundColor3}
+							selectionColor='#0B1088'
               placeholder="Phone Number"
               underlineColorAndroid="transparent"
               maxLength={11}
               keyboardType='number-pad'
-              onChangeText={(v) => this.setState({ number: v })}
-              value={this.state.number}
+              onChangeText={(v) => this.setState({ phone: v })}
+              value={this.state.phone}
+              onFocus={() => {
+								this.setState({ backgroundColor3: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor3: '#8FAAB2' });
+							}}
           />
     </View>
     <View style={styles.SectionStyle}>
-        <Image style={styles.ImageStyle}
-        source={require('../../assets/id.png')} //Change your icon image here
-            />
+     <Icon name={'user'}  size={24} style={{marginLeft:8}}
+     color ={this.state.backgroundColor4}
+     />
       <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
+              color={this.state.backgroundColor4}
+							selectionColor='#0B1088'
               placeholder="Unique id of senior person"
               underlineColorAndroid="transparent"
               onChangeText={(v) => this.setState({ unique_id: v })}
               value={this.state.unique_id}
+              onFocus={() => {
+								this.setState({ backgroundColor4: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor4: '#8FAAB2' });
+							}}
           />
     </View>
     <View style={styles.SectionStyle}>
-        <Image style={styles.ImageStyle}
-        source={require('../../assets/password.png')} //Change your icon image here
-            />
+    <Icon name={'lock'}  size={24}  style={{marginLeft:8}}
+    color ={this.state.backgroundColor5}
+    />
       <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
+              color={this.state.backgroundColor5}
+							selectionColor='#0B1088'
               placeholder="Enter Password"
               underlineColorAndroid="transparent"
               secureTextEntry={true}
@@ -195,15 +348,23 @@ export default class Signup2 extends Component {
               keyboardType = 'numeric'
               onChangeText={(v) => this.setState({ password: v })}
               value={this.state.password}
+              onFocus={() => {
+								this.setState({ backgroundColor5: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor5: '#8FAAB2' });
+							}}
           />
-    </View>
-    <Text style={{marginLeft:20,color:'#8FAAB2',fontSize:12}}>Use 4 Character Alphabet only</Text>
-    <View style={styles.SectionStyle}>
-        <Image style={styles.ImageStyle}
-        source={require('../../assets/password.png')} //Change your icon image here
-            />
+          </View>
+        <Text style={{marginLeft:30,color:'#8FAAB2',fontSize:12}}>Use 4 Numbers only</Text>
+         <View style={styles.SectionStyle}>
+      <Icon name={'lock'}  size={24} style={{marginLeft:8}} 
+        color ={this.state.backgroundColor6}
+             />
       <TextInput
-              style={{flex:1,backgroundColor:'#F4F4FC'}}
+              style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
+              color={this.state.backgroundColor6}
+							selectionColor='#0B1088'
               placeholder="Confirm Password"
               underlineColorAndroid="transparent"
               secureTextEntry={true}
@@ -211,27 +372,18 @@ export default class Signup2 extends Component {
               keyboardType='numeric'
               onChangeText={(v) => this.setState({ confirm_password: v })}
               value={this.state.confirm_password}
+              onFocus={() => {
+								this.setState({ backgroundColor6: '#0B1088' });
+							}}
+							onBlur={() => {
+								this.setState({ backgroundColor6: '#8FAAB2' });
+							}}
           />
     </View>
-    
-    <View style={styles.checkboxContainer}>
-        <CheckBox
-          //value={isSelected}
-          //onValueChange={setSelection}
-          style={styles.checkbox}
-        />
-        <Text style={{fontSize:16,}}>Check the box to agree to the</Text>
-      </View>
-      <TouchableOpacity onPress={() => Alert.alert(
-          'Alert ',
-          'App is Under Progress Coming soon',
-      )}>
-        <Text style={{textAlign:'center',fontWeight:'bold',fontSize:16}} >Terms&Conditions</Text>
-      </TouchableOpacity>
       <View >
      <TouchableOpacity onPress={()=> this.handleValidate() }
      
-    style={{marginRight:16,marginLeft:16,height:48,backgroundColor:'#037ECF',borderRadius:8}}>
+    style={{marginRight:16,marginLeft:16,height:48,backgroundColor:'#037ECF',borderRadius:8,marginTop:20}}>
        <Text style={{color:'white',textAlign:'center',marginTop:12,fontSize:16,fontWeight:'500'}}>Sign Up</Text>
      </TouchableOpacity>
      </View>
@@ -242,9 +394,8 @@ export default class Signup2 extends Component {
      </TouchableOpacity>
      </View>
      </View>
+     </ScrollView>
       <StatusBar style="auto" />
-      </ScrollView>
-    
       </View>
     
   );
@@ -265,11 +416,9 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: "row",
     alignItems:'center',
-    marginLeft:100,
-    marginTop:10
   },
   checkbox: {
-    alignSelf: "center",
+    
   },
   ImageStyle:{
     width:22,
@@ -296,11 +445,25 @@ ImageStyle: {
 ImageStyle1:{
   height:20,
   width:20,
-  marginTop:57,
+  marginTop:47,
     marginLeft:16
 },
-scrollView: {
-  
+SectionStyle2:{
+  flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F4F4FC',
+    height: 55,
+    borderRadius: 5 ,
+    margin: 5,
+    marginRight:30,
+    marginLeft:30,
+    marginTop:30
+
 },
+label: {
+  fontSize:16
+},
+
 
 });
