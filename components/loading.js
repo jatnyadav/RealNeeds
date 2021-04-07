@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Image } from "react-native";
+import { Text, StyleSheet, View, Image,ActivityIndicator } from "react-native";
 import { Overlay } from "react-native-elements";
 import global from "../utils/global";
 let visible = false;
@@ -32,12 +32,11 @@ export default class Loading extends Component {
     return (
       <Overlay
         isVisible={this.state.visible}
-        overlayBackgroundColor="transparent"
-        overlayStyle={styles.overlay}
-        containerStyle={styles.overlay}
+
       >
         <View style={{ backgroundColor: "transparent" }}>
-          <Image source={global.ASSETS.LoadingScreen} style={styles.image} />
+        <ActivityIndicator
+         size="large" color="#0000ff"/>
           <Text style={styles.loadingText}>Loading ...</Text>
         </View>
       </Overlay>
@@ -47,14 +46,7 @@ export default class Loading extends Component {
 
 const styles = StyleSheet.create({
   overlay: {
-    borderColor: global.COLOR.PRIMARY_DARK,
-    borderWidth: 2,
-    opacity: 1,
-    height: 150,
-    width: 150,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
+   
   },
   image: {
     height: 100,

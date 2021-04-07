@@ -67,7 +67,7 @@ export default class ForgotPassword extends Component {
       } else if (
         !this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
       ) {
-        Alert.alert(global.CONSTANT.APPNAME, "Please enter  valid e-mail address ");
+        Alert.alert(global.CONSTANT.APPNAME, "Please enter valid e-mail address ");
       }
         else {
           this.ResetPassword()
@@ -86,7 +86,7 @@ export default class ForgotPassword extends Component {
       <Text style={{fontSize:20,color:'white',fontWeight:'400',textAlign:'left',marginLeft:30,marginBottom:30}}>Enter your registerd Email id</Text>
       <View style={styles.downview}>
       <View style={styles.SectionStyle}>
-      <Icon name={'user'}  size={24} style={{marginLeft:8}}
+      <Icon name={'mail'}  size={24} style={{marginLeft:8}}
       color ={this.state.backgroundColor}
       />
           <TextInput

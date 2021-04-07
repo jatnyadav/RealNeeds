@@ -12,8 +12,8 @@ export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			phone: "",
-			password: "",
+			phone: "", //1234567890        for testing only
+			password: "",//1234            for testing only
 			pressed: false,
 			backgroundColor: 'black',
 			backgroundColor2: 'black',
@@ -90,7 +90,7 @@ export default class Login extends Component {
             />
 						<TextInput
 							style={{ flex: 1, backgroundColor: '#F4F4FC', marginLeft: 8 }}
-							placeholder="PhoneNumber"
+							placeholder="Phone Number"
 							maxLength ={11}
 							color={this.state.backgroundColor}
 							selectionColor='#0B1088'
@@ -143,7 +143,7 @@ export default class Login extends Component {
 					<View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 600 }}>
 						<Text style={{ marginTop: 27, fontSize: 16, }}>No Account Yet?</Text>
 						<TouchableOpacity onPress={() => { this.props.navigation.navigate("Catagory"); }}>
-							<Text style={{ marginTop: 27, marginLeft: 5, fontSize: 16, fontWeight: 'bold', textDecorationLine: 'underline', }}>Sign up here!</Text>
+							<Text style={{ marginTop: 27, marginLeft: 5, fontSize: 16, fontWeight: 'bold', textDecorationLine: 'underline', }}>Create Account Here!</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

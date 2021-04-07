@@ -8,6 +8,7 @@ import * as React from 'react';
 import
  MaterialCommunityIcons
 from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import {
   NavigationContainer
@@ -18,156 +19,136 @@ import {
 import {
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs';
-
+import Icon from 'react-native-vector-icons/Feather';
 import Home from '../Screens/App/Home';
 import DetailsScreen from '../Screens/App/DetailsScreen';
 import ProfileScreen from '../Screens/App/ProfileScreen';
 import SettingsScreen from '../Screens/App/SettingScreen';
-import Feedback from '../Screens/App/feedback'
-import Icon from 'react-native-vector-icons/Feather';
+import feedback from '../Screens/App/feedback';
+import Login from '../Screens/Auth/Login'
+import calendar from '../Screens/App/Calender'
+import Hotkey from '../Screens/App/Hotkey'
+import SettingScreen from '../Screens/App/SettingScreen';
+import Message from '../Screens/App/Message'
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function HomeStack() {
-  return (
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: 'black',
-          headerTitle:'Home',
-          headerTitleStyle: { fontWeight: 'bold',alignSelf:'center' }
-        }}>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          />
-      </Stack.Navigator>
-  );
-}
-function HomeStack1() {
-    return (
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerStyle: { backgroundColor: '#fff' },
-            headerTintColor: 'black',
-            headerTitle:'Home',
-            headerTitleStyle: { fontWeight: 'bold',alignSelf:'center' }
-          }}>
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            />
-          <Stack.Screen
-            name="Details"
-            component={DetailsScreen}
-            options={{ title: 'Details Page' }} />
-        </Stack.Navigator>
-    );
-  }
-  function HomeStack2() {
-    return (
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerStyle: { backgroundColor: '#fff' },
-            headerTintColor: 'black',
-            headerTitle:'Home',
-            headerTitleStyle: { fontWeight: 'bold',alignSelf:'center' }
-          }}>
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            />
-          <Stack.Screen
-            name="Details"
-            component={DetailsScreen}
-            options={{ title: 'Details Page' }} />
-        </Stack.Navigator>
-    );
-  }
-function SettingsStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Settings"
-      screenOptions={{
-        headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: 'black',
-          headerTitle:'Settings',
-          headerTitleStyle: { fontWeight: '600',alignSelf:'center' }
-      }}>
-      <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ title: 'Chat Page' }}/>
-      <Stack.Screen
-        name="Details"
-        component={DetailsScreen}
-        options={{ title: 'Details Page' }}/>
-      <Stack.Screen
-        name="Profile"
+export default function AppNavigator(){
+   return(
+    <Tab.Navigator
+      initialRouteName="Home"
+      activeColor="#e91e63"
+      headerTitle='Home'
+      barStyle={{ backgroundColor: 'tomato' }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{ headerTitle: "Home" }}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color }) => (
+            <Icon name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={Chats}
+        
+        options={{
+          tabBarLabel: 'Chat',
+          tabBarIcon: ({ color }) => (
+            <Icon name="message-circle" color={color} size={26} />
+          ),
+        }}
+      />
+       <Tab.Screen
+    name="Add"
+    options={{
+        tabBarLabel: 'Another Catagory',
+        tabBarIcon: ({ color }) => (
+            <View
+            style={{
+                position: 'absolute',
+                bottom: 0, // space from bottombar
+                height: 68,
+                width: 68,
+            
+                justifyContent: 'center',
+                backgroundColor: 'transparent',
+                alignItems: 'center',
+      
+            }}
+            >
+             <Image
+          style={{height:77,width:77}}
+          source={require('../assets/custommidd.png')}
+        />
+            </View>
+        )
+    }}
+    component={HotKey}/>
+      <Tab.Screen
+        name="Notification"
         component={ProfileScreen}
-        options={{ title: 'Profile Page' }}/>
-    </Stack.Navigator>
-  );
-}
+        options={{
+          headerTitle:'Notifications',
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <Icon name="bell" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Setting"
+        component={SettingPage}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <Icon name="settings" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+   )
+  }
+  function SettingPage() {
+    return (
+      <Stack.Navigator
+        headerMode="none"
+        // screenOptions={{ cardStyleInterpolator: fadeConfig }}
+        initialRouteName="SettingScreen">
+        <Stack.Screen name="feed_home" component={SettingsScreen} />
+        <Stack.Screen name="feedback" component={feedback} />
+        <Stack.Screen name="Login" component={Login}/>
 
-function App() {
-  return (
-    
-      <Tab.Navigator
-        initialRouteName="Feed"
-        tabBarOptions={{
-          activeTintColor: '#037ECF',
-        }}>
-        <Tab.Screen
-          name="HomeStack"
-          component={HomeStack}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="home"
-                color={color}
-                size={24}
-              />
-            ),
-          }}  />
-        <Tab.Screen
-          name="SettingsStack"
-          component={SettingsStack}
-          options={{
-            tabBarLabel: 'Chat',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="chat"
-                color={color}
-                size={size}
-              />
-            ),
-          }} />
-          <Tab.Screen
-          name="HomeStack1"
-          component={SettingsStack}
-          options={{
-            tabBarLabel: 'Notifications',
-            tabBarIcon: ({ color, size }) => (
-              <Icon name={'mail'}  size={24} />
-            ),
-          }}  />
-          <Tab.Screen
-          name="HomeStack2"
-          component={SettingsStack}
-          options={{
-            tabBarLabel: 'Setting',
-            tabBarIcon: ({ color, size }) => (
-              <Icon name={'settings'}  size={24} />
-            ),
-          }}  />
-          
-      </Tab.Navigator>
-  );
-}
-export default App;
+        {/* <Stack.Screen name="feed_home_profile_view" component={Profile_View} /> */}
+      </Stack.Navigator>
+    );
+  }
+  function HotKey() {
+    return (
+      <Stack.Navigator
+        headerMode="none"
+        // screenOptions={{ cardStyleInterpolator: fadeConfig }}
+        initialRouteName="Hotkey">
+        <Stack.Screen name="Hotkey" component={Hotkey} />
+        <Stack.Screen name="Calender" component={calendar} />
+
+        {/* <Stack.Screen name="feed_home_profile_view" component={Profile_View} /> */}
+      </Stack.Navigator>
+    );
+  }
+  function Chats() {
+    return (
+      <Stack.Navigator
+        headerMode="none"
+        // screenOptions={{ cardStyleInterpolator: fadeConfig }}
+        initialRouteName="Message">
+        <Stack.Screen name="Message" component={Message} />
+
+        {/* <Stack.Screen name="feed_home_profile_view" component={Profile_View} /> */}
+      </Stack.Navigator>    );
+  }
+   

@@ -3,7 +3,8 @@ import React,{Component} from 'react';
 import { TextInput } from 'react-native';
 import Axios from 'axios';
 import {CreateAccount} from "../../utils/api";
-import Loading from '../../components/Loading'
+import Icon from 'react-native-vector-icons/Feather';
+import Loading from '../../components/Loading';
 import { Toast,Popup } from 'popup-ui';
 import Signup from '../Auth/Signup2senior'
 import global from '../../utils/global'
@@ -16,6 +17,9 @@ export default class Otpverify extends Component {
   constructor(props) {
 		super(props);
 		this.state = { t1: '', t2: '', t3: '', t4: ''};
+  }
+  componentDidMount(){
+    this.refs.t1ref.focus()
   }
   CreateAccont() {
     console.log(this.state.t1)
@@ -45,7 +49,7 @@ export default class Otpverify extends Component {
             Loading.hide();
             Popup.show({
               type: "Success",
-              title: "Congratulations 🎉🎉",
+              title: " Congratulation account created successfully",
               button: true,
               textBody: response.data.message,
               buttonText: true,
@@ -73,16 +77,56 @@ export default class Otpverify extends Component {
       Alert.alert('otp not verify')
    return false
     }
-
-    
   }
-  
+  //Resend otp api here
+  ResendOtp() {
+    Loading.show();
+    console.log("data isssssssssssssssssssssssssssss")
+    Axios({
+      method: "post",
+      url: "https://realneed.i4dev.in/api/sendotp",
+      data: {
+        phone: this.props.route.params.phone,
+        email: this.props.route.params.email,
+      },
+      validateStatus: () => {
+        return true; // I'm always returning true, you may want to do it depending on the status received
+      },
+    }).then(
+      function (response) {
+        if (response.data.status == true) {
+          Loading.hide();
+          const otp = response.data.data.otp
+          console.log(response.data.data.otp)
+          // Popup.show({
+          //   type: "Success",
+          //   title: "Congratulations 🎉🎉",
+          //   button: true,
+          //   textBody: response.data.message,
+          //   buttonText: "Welcome",
+          //   callback: () => {
+          //     Popup.hide();
+              this.props.navigation.navigate("Verification");
+        } else {
+          Loading.hide();
+          Popup.show({
+            type: "Danger",
+            title: global.CONSTANT.APPNAME + " Alert❗",
+            button: true,
+            textBody: response.data.message,  
+            buttontext: "Ok",
+            callback: () => Popup.hide(),
+          });
+        }
+      }.bind(this)
+    );
+  }
+  //main contant app
   render(){
   
     const{name,age,email,password,confirm_password,hkrid,phone,otp} = this.props.route.params
     return (
     <View style={styles.container}>
-      <Text>Otp is:{otp}</Text>
       <TouchableOpacity onPress={() => { this.props.navigation.navigate("Login");}}>
       <Icon name='arrow-left'size={30} style={{color:'white',
     marginTop:57,
@@ -94,30 +138,45 @@ export default class Otpverify extends Component {
       <View style={styles.downview}>
         <View style={{flexDirection:'row',alignItems:'center',textAlign:'center'}}>
       <TextInput style={{marginTop:36,height:52,width:65,marginLeft:30,backgroundColor:'#F4F4FC',textAlign:'center',borderRadius:8}}
-        ref={'nameref'}
+        ref={'t1ref'}
         keyboardType='number-pad'
          maxLength={1}
          returnKeyType={'next'}
          autoFocus = {true}
-         onChangeText={(v) => this.setState({ t1: v })}
+         onChangeText={(v) => {this.setState({ t1: v })
+         if(v != ''){
+           this.refs.t2ref.focus()
+         }
+         }}
          value={this.state.t1}
       />
       <TextInput style={{marginTop:36,height:52,width:65,marginLeft:18,backgroundColor:'#F4F4FC',textAlign:'center',borderRadius:8}}
+       ref={'t2ref'}
         keyboardType='number-pad'
         maxLength={1}
-        onChangeText={(v) => this.setState({ t2: v })}
+        onChangeText={(v) => {this.setState({ t2: v })
+        if(v != ''){
+          this.refs.t2ref.focus()
+        }
+        }}
          value={this.state.t2}
         />
       <TextInput style={{marginTop:36,height:52,width:65,marginLeft:18,backgroundColor:'#F4F4FC',textAlign:'center',borderRadius:8}}
-        keyboardType='number-pad'
+       ref={'t3ref'}
+       keyboardType='number-pad'
         maxLength={1}
-        onChangeText={(v) => this.setState({ t3: v })}
+        onChangeText={(v) => {this.setState({ t3: v })
+        if(v != ''){
+          this.refs.t2ref.focus()
+        }
+        }}
          value={this.state.t3}
         
         />
         
       <TextInput style={{marginTop:36,height:52,width:65,marginLeft:18,backgroundColor:'#F4F4FC',textAlign:'center',borderRadius:8}}
-        keyboardType='number-pad'
+       ref={'t4ref'}
+       keyboardType='number-pad'
         maxLength={1}
         onChangeText={(v) => this.setState({ t4: v })}
          value={this.state.t4}
@@ -129,8 +188,8 @@ export default class Otpverify extends Component {
        <Text style={{color:'white',textAlign:'center',marginTop:12,fontSize:16,fontWeight:'500'}}>SEND</Text>
           </TouchableOpacity>
           <View style={{flexDirection:'row',alignSelf:'center',marginBottom:600}}>
-          <Text style={{fontSize:16,marginTop:27,}} >Did't receive code?</Text>
-          <TouchableOpacity>
+          <Text style={{fontSize:16,marginTop:27,}} >Didn't receive code?</Text>
+          <TouchableOpacity onPress={()=>{this.ResendOtp()}} >
           <Text style={{fontWeight:'bold',fontSize:16,marginTop:27,marginLeft:5,textDecorationLine:'underline'}}>Resend Now</Text>
         </TouchableOpacity>
         </View>

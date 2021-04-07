@@ -16,7 +16,8 @@ export default {
      Activatesenior:require('../assets/activesenior.png'),
      InActivateff:require('../assets/inactivefriendsandfamily.png'),
      InActivatesenior:require('../assets/inactivesenior.png'),
-     LoadingScreen:require('../assets/activityindicator.jpg')
+     LoadingScreen:require('../assets/activityindicator.jpg'),
+     ACTIVESENIOR:require('../assets/Group.png')
     // FB_ICON: require("./../assets/images/facebooklogin.png"),
     // GOOGLE_ICON: require("./../assets/images/googlelogin.png"),
     // INSTAGRAM_ICON: require("./../assets/images/instagram.png"),

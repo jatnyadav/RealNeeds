@@ -14,7 +14,7 @@ export default function MainNavigator() {
   return (
     <NavigationContainer ref={navigationRef}>
       <Tab.Navigator
-        initialRouteName="App"
+        initialRouteName="Auth"
         backBehavior="none"
         screenOptions={({ route }) => ({
           tabBarVisible: false,

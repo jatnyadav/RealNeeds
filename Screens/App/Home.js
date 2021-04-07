@@ -3,6 +3,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { StyleSheet, Text, View,ScrollView  } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import { Header,Input,Image } from 'react-native-elements'
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -11,15 +12,15 @@ export default function App() {
     <View style={styles.container}>
       <SafeAreaView>
        <ScrollView style={styles.scrollView}>
-     <View style={{borderWidth:1,borderColor:'#1877F2',marginLeft:20,marginRight:20,borderRadius:10}}>
-     <TextInput style={{ height: 50, borderColor: 'gray',marginLeft:10,marginRight:10,backgroundColor:'#F4F4FC',borderRadius:8,marginTop:5 }}
+       <Text style={{marginTop:20,textAlign:'center',fontWeight:'bold',fontSize:22}}>Home</Text>
+     <View style={{borderWidth:1,borderColor:'#1877F2',marginLeft:20,marginRight:20,borderRadius:10,marginTop:20}}>
+     <TextInput
+      style={{ height: 50, borderColor: 'gray',marginLeft:10,marginRight:10,backgroundColor:'#F4F4FC',borderRadius:8,marginTop:5 }}
       placeholder ='Say Something' 
       />
       <TouchableOpacity>
      <View style={styles.header}>
-     <Image style={styles.ImageStyle}
-     source={require('../../assets/homephoto.jpg')} //Change your icon image here
-      />
+     <Icon name={'image'} size={26} style={{marginLeft:8}}/>
      <Text style={{fontSize:14,fontWeight:'bold',marginLeft:9,marginTop:2}}>Photo/video</Text>
      </View>
      </TouchableOpacity>

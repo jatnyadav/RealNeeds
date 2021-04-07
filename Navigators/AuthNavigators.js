@@ -9,6 +9,7 @@ import Verification from '../Screens/Auth/Otpverify';
 import ForgotPassword from '../Screens/Auth/ForgotPassword';
 import ResetPassword from '../Screens/Auth/Resetpassword';
 import otpverifyforgotpassword from '../Screens/Auth/otpverifyforgotpassword'
+import otpverifyforgotpassword2 from '../Screens/Auth/otpverifyforgotpassword2'
 import alerts from '../Screens/Auth/alerts';
 import { Alert } from 'react-native';
 const Stack = createStackNavigator();
@@ -28,6 +29,7 @@ export default function AuthNavigator(){
      <Stack.Screen name="otpverifyforgotpassword" component={otpverifyforgotpassword}/>
      <Stack.Screen name="Alerts" component={alerts}/>
      <Stack.Screen name="Feedback" component={Feedback}/>
+     <Stack.Screen name="otpverifyforgotpassword2" component={otpverifyforgotpassword2}/>
         </Stack.Navigator>
     )
 }

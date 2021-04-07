@@ -29,7 +29,7 @@ export default class Catagory extends Component {
                               }}
                                                                       >
            <Image
-             source={this.state.selectedcatagory=="1"?global.ASSETS.Activateff:global.ASSETS.InActivateff}
+             source={this.state.selectedcatagory=="1"?global.ASSETS.Activatesenior:global.ASSETS.InActivatesenior}
              style={styles.tinilogo1}
                    />
 
@@ -39,7 +39,7 @@ export default class Catagory extends Component {
                  }}
                          >
        <Image
-        source={this.state.selectedcatagory=="0"?global.ASSETS.Activatesenior:global.ASSETS.InActivatesenior}
+        source={this.state.selectedcatagory=="0"?global.ASSETS.Activateff:global.ASSETS.InActivateff}
         style={styles.tinilogo2}
       />
      

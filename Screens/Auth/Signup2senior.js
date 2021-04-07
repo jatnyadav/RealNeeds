@@ -6,7 +6,7 @@ import Loading from '../../components/Loading'
 //import {Signup} from '../../utils/api';
 import Icon from 'react-native-vector-icons/Feather';
 import { CheckBox } from 'react-native-elements'
-import { StyleSheet, Text, View,TextInput,Alert,TouchableOpacity,Image,ScrollView} from 'react-native';
+import { StyleSheet, Text, View,TextInput,Alert,TouchableOpacity,ScrollView} from 'react-native';
 import { Toast,Popup } from 'popup-ui';
 export default class Signup2 extends Component {
   constructor(props){
@@ -84,15 +84,26 @@ export default class Signup2 extends Component {
   handleValidate() {
     if (this.state.full_name == "") {
       Toast.show({
-        title: "Validation Alert❗",
+        title: "Alert❗",
         text: "Please enter your full name.",
         color: global.COLOR.WARNING,
         icon: <Icon name="close" />,
         timing: 2000,
       });
-    } else if (this.state.age == "") {
+    } else if (
+      !this.state.full_name.match(/^[a-zA-Z ]{2,32}$/)
+    ) {
       Toast.show({
         title: "Validation Alert❗",
+        text: "Please enter valid name.",
+        color: global.COLOR.WARNING,
+        icon: <Icon name="close" />,
+        timing: 2000,
+      });
+    }
+     else if (this.state.age == "") {
+      Toast.show({
+        title: "Alert❗",
         text: "Please enter your age.",
         color: global.COLOR.WARNING,
         icon: <Icon name="close" />,
@@ -100,7 +111,8 @@ export default class Signup2 extends Component {
       });
     } else if (
       !(
-        this.state.age.length == 2
+        this.state.age.length == 2,
+        this.state.age.match(/^[0]?[789]\d{9}$/)
       )
     ) {
       Toast.show({
@@ -113,7 +125,7 @@ export default class Signup2 extends Component {
     }
     else if (this.state.email == "") {
       Toast.show({
-        title: "Validation Alert❗",
+        title: "Alert❗",
         text: "Please enter email address.",
         color: global.COLOR.WARNING,
         icon: <Icon name="close" />,
@@ -131,7 +143,7 @@ export default class Signup2 extends Component {
       });
     } else if (this.state.number == "") {
       Toast.show({
-        title: "Validation Alert❗",
+        title: "Alert❗",
         text: "Please enter mobile number.",
         color: global.COLOR.WARNING,
         icon: <Icon name="close" />,
@@ -140,7 +152,7 @@ export default class Signup2 extends Component {
     }
      else if (this.state.unique_id == "") {
       Toast.show({
-        title: "Validation Alert❗",
+        title: "Alert❗",
         text: "Please enter unique id.",
         color: global.COLOR.WARNING,
         icon: <Icon name="close" />,
@@ -161,7 +173,7 @@ export default class Signup2 extends Component {
     }
      else if (this.state.password == "") {
       Toast.show({
-        title: "Validation Alert❗",
+        title: "Alert❗",
         text: "Please enter password.",
         color: global.COLOR.WARNING,
         icon: <Icon name="close" />,
@@ -181,7 +193,7 @@ export default class Signup2 extends Component {
       });
     } else if (this.state.confirm_password == "") {
       Toast.show({
-        title: "Validation Alert❗",
+        title: "Alert❗",
         text: "Please enter confirm password.",
         color: global.COLOR.WARNING,
         icon: <Icon name="close" />,
@@ -225,7 +237,7 @@ export default class Signup2 extends Component {
     marginTop:47,
     marginLeft:16}}/>   
  </TouchableOpacity>
-      <Text style={{fontSize:32,color:'white',fontWeight:'bold',textAlign:'left',marginTop:4,marginLeft:30,}}>Crate an account</Text>
+      <Text style={{fontSize:32,color:'white',fontWeight:'bold',textAlign:'left',marginTop:4,marginLeft:30,}}>Create an account</Text>
       <Text style={{fontSize:20,color:'white',fontWeight:'400',textAlign:'left',marginLeft:30,marginBottom:30,marginTop:2}}>Sign up To get Started!</Text>
       
        <View style={styles.downview}>
@@ -278,7 +290,7 @@ export default class Signup2 extends Component {
               style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
               color={this.state.backgroundColor2}
 							selectionColor='#0B1088'
-              placeholder="EmailId"
+              placeholder="Email id"
               underlineColorAndroid="transparent"
               keyboardType='email-address'
               onChangeText={(v) => this.setState({ email: v })}
@@ -321,7 +333,7 @@ export default class Signup2 extends Component {
               style={{flex:1,backgroundColor:'#F4F4FC',marginLeft:8}}
               color={this.state.backgroundColor4}
 							selectionColor='#0B1088'
-              placeholder="Unique id of senior person"
+              placeholder="HKR provided id"
               underlineColorAndroid="transparent"
               onChangeText={(v) => this.setState({ unique_id: v })}
               value={this.state.unique_id}
@@ -390,7 +402,7 @@ export default class Signup2 extends Component {
      <View style={{flexDirection:'row',alignSelf:'center',marginTop:10,marginBottom:100}}>
      <Text style={{fontSize:16}}>Already a Member?</Text>
      <TouchableOpacity onPress={() => { this.props.navigation.navigate("Login");}}>
-       <Text style={{fontSize:16,fontWeight:'bold'}}>Log in Here</Text>
+       <Text style={{fontSize:16,fontWeight:'bold',marginLeft:5}}>Log in Here</Text>
      </TouchableOpacity>
      </View>
      </View>

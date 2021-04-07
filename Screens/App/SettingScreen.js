@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React ,{Component}from 'react';
-import { StyleSheet, Text, View,Image } from 'react-native';
+import { StyleSheet, Text, View,Image,Alert,ScrollView} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Feedback from '../App/feedback'
 import Icon from 'react-native-vector-icons/Feather';
@@ -14,11 +14,27 @@ export default class SettingScreen extends Component {
 			pressed: false,
 			backgroundColor: '#037ECF',
 			backgroundColor2: 'black',
+      
 		}
 	}
+  createTwoButtonAlert = () =>
+    Alert.alert(
+      "RealNeeds",
+      "Are you sure to want logout?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => this.props.navigation.navigate('Auth') }
+      ]
+    );
   render(){
   return (
     <View style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+      <Text style={{marginTop:50,textAlign:'center',fontWeight:'bold',fontSize:22}}>Settings</Text>
       <View style={{flexDirection:'row',alignSelf:'flex-start',marginTop:10}}>
        <Image
           style={styles.tinyLogo}
@@ -45,7 +61,7 @@ export default class SettingScreen extends Component {
        <Text style={{marginLeft:20,fontSize:18}}>About Us</Text>
        <Icon name='arrow-right' size={24} style={{textAlign:'right',marginLeft:190}}/>
        </TouchableOpacity > 
-       <TouchableOpacity onPress={() => { this.props.navigation.navigate("Feedback");}}
+       <TouchableOpacity onPress={() => { this.props.navigation.navigate("feedback");}}
        style={{flexDirection:'row',marginTop:30,}}>
        <Icon name='star' size={24} style={{marginLeft:30}}/>
        <Text style={{marginLeft:20,fontSize:18}}>Feedback</Text>
@@ -58,7 +74,7 @@ export default class SettingScreen extends Component {
        </TouchableOpacity>
        <TouchableOpacity style={{flexDirection:'row',marginTop:30,}}>
        <Icon name='help-circle' size={24} style={{marginLeft:30}}/>
-       <Text style={{marginLeft:20,fontSize:18}}>FAq</Text>
+       <Text style={{marginLeft:20,fontSize:18}}>FAQ</Text>
        <Icon name='arrow-right' size={24} style={{textAlign:'right',marginLeft:233}}/>
        </TouchableOpacity>
        <TouchableOpacity style={{flexDirection:'row',marginTop:30,}}>
@@ -71,12 +87,16 @@ export default class SettingScreen extends Component {
        <Text style={{marginLeft:20,fontSize:18}}>Terms & Conditions</Text>
        <Icon name='arrow-right' size={24} style={{textAlign:'right',marginLeft:105}}/>
        </TouchableOpacity>
-       <TouchableOpacity style={{flexDirection:'row',marginTop:30,}}>
+       <TouchableOpacity onPress={()=> {this.createTwoButtonAlert()}}
+
+       style={{flexDirection:'row',marginTop:30,marginBottom:200}}>
        <Icon name='log-out' size={24} style={{marginLeft:30}}/>
        <Text style={{marginLeft:20,fontSize:18}}>Log out</Text>
-       <Icon name='arrow-right' size={24} style={{textAlign:'right',marginLeft:205,marginBottom:100}}/>
+       <Icon name='arrow-right' size={24} style={{textAlign:'right',marginLeft:205}}/>
        </TouchableOpacity>
+       </ScrollView>
       <StatusBar style="auto" />
+      
     </View>
   );
 }

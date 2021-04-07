@@ -24,7 +24,7 @@ export default class otpverifyforgotpassword extends Component {
   }
   CreateAccont() {
     const edtOtp = this.state.t1 + this.state.t2 + this.state.t3 + this.state.t4;
-    if(this.props.route.params.otp == edtOtp){
+    if(this.props.route.params.otp== edtOtp){
       this.props.navigation.navigate('ResetPassword',{
         email:this.props.route.params.email
       })
@@ -41,49 +41,7 @@ export default class otpverifyforgotpassword extends Component {
   }
 
   //resend password api
-  ResetPassword() {
-    Loading.show();
-    console.log("data isssssssssssssssssssssssssssss")
-    Axios({
-      method: "post",
-      url: "https://realneed.i4dev.in/api/resetpassword",
-      data: {
-        email: this.props.route.params.email,
-      },
-      validateStatus: () => {
-        return true; // I'm always returning true, you may want to do it depending on the status received
-      },
-    }).then(
-      function (response) {
-        if (response.data.status == true) {
-          const otp = response.data.data.otp
-          console.log('otp isssssssssssssssssssssssssssssssssssssssss',otp)
-          Loading.hide();
-          // Popup.show({
-          //   type: "Success",
-          //   title: "Congratulations 🎉🎉",
-          //   button: true,
-          //   textBody: response.data.message,
-          //   buttonText: "Welcome",
-          //   callback: () => {
-          //     Popup.hide();
-              this.props.navigation.navigate("otpverifyforgotpassword2",{
-                otp
-          });
-        } else {
-          Loading.hide();
-          Popup.show({
-            type: "Danger",
-            title: global.CONSTANT.APPNAME + " Alert❗",
-            button: true,
-            textBody: response.data.message,  
-            buttontext: "Ok",
-            callback: () => Popup.hide(),
-          });
-        }
-      }.bind(this)
-    );
-  }
+ 
     
 
     handleValidate() { 

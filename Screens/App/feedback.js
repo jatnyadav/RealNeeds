@@ -3,7 +3,9 @@ import React,{Component, useState} from 'react';
 import { SafeAreaView,StyleSheet, Text, View,Image } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function App() {
+export default function Feedback() {
+  
+  
   const [defaultRating,setdefaultRating] = useState(1);
   const [ maxRating, setmaxRating] = useState([1,2,3,4,5]);
 
@@ -32,27 +34,23 @@ export default function App() {
 
               </TouchableOpacity>
             )
-
           }
-
           )
         }
        
-
       </View>
     )
   }
   return (
     <View style={styles.container}>
-      <View style={{marginTop:150}}>
       <Text style={styles.textStyle}>Please Rate Us</Text>
       <CustomRatingBar/>
       <Text style={styles.textStyle}>
         {defaultRating + '/ ' + maxRating.length}
 
       </Text>
-      <Text style={{fontWeight:'bold',fontSize:19}}>Comment</Text>
-      <TextInput style={{borderWidth:1,padding:15}}
+      <Text style={{fontWeight:'bold',fontSize:19,marginLeft:30}}>Comment</Text>
+      <TextInput style={{borderWidth:1,padding:15,marginLeft:30,marginRight:30,borderRadius:10}}
       multiline={true}
       maxLength={250}
       placeholder='Add Comment Here'>
@@ -60,13 +58,12 @@ export default function App() {
       </TextInput>
       <TouchableOpacity
       activeOpacity ={0.7}
-      style={styles.buttonStyle}
+      style={{marginRight: 30, marginLeft: 30, height: 48, backgroundColor: '#037ECF', borderRadius: 8, marginTop: 19 }}
       onPress={()=> alert(defaultRating)}
       >
-        <Text style={{textAlign:'center',color:'white',fontWeight:'bold',fontSize:16}}>Submit</Text>
+        <Text style={{textAlign:'center',color:'white',fontWeight:'bold',fontSize:16,marginTop:10}}>Submit</Text>
 
       </TouchableOpacity>
-      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -74,8 +71,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    margin:30,
+    flex:1,
     justifyContent:'center',
+    backgroundColor:'#fff'
   },
   CustomRatingBarStyle:{
     justifyContent:'center',
